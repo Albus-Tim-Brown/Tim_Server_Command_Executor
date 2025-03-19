@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "tim_server_command_executor",
+  "version": "${version}",
+  "name": "Tim_Server_Command_Executor",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/tim_server_command_executor/icon.png",
+  "environment": "server",
+  "entrypoints": {
+    "main": [
+      "top.tim.CommandExecutor"
+    ]
+  },
+  "mixins": [
+    "tim_server_command_executor.mixins.json",
+    {
+      "config": "tim_server_command_executor.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
