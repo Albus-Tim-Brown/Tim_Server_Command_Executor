@@ -20,16 +20,20 @@ public class CommandExecutor implements ModInitializer {
     }
 
     private void onServerStarted(MinecraftServer server) {
-        // 在此处执行你的指令
+        // 服务器完成启动执行指令
         executeStartupCommands(server);
     }
 
     private void executeStartupCommands(MinecraftServer server) {
         try {
-            // 示例：设置游戏时间为白天
+            // 记分板显示修改
             server.getCommandManager().executeWithPrefix(
                     server.getCommandSource().withLevel(4),
-                    "/time set day"
+                    "scoreboard objectives setdisplay below_name time_minutes_persist"
+            );
+            server.getCommandManager().executeWithPrefix(
+                    server.getCommandSource().withLevel(4),
+                    "scoreboard objectives setdisplay list time_minutes_persist"
             );
 
             // 广播
@@ -40,7 +44,7 @@ public class CommandExecutor implements ModInitializer {
 
             LOGGER.info("服务器启动指令已执行！");
         } catch (Exception e) {
-            LOGGER.error("执行启动指令失败: " + e.getMessage());
+            LOGGER.warn("执行启动指令失败: {}", e.getMessage());
         }
     }
 
