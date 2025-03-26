@@ -36,13 +36,7 @@ public class CommandExecutor implements ModInitializer {
                     "scoreboard objectives setdisplay list time_minutes_persist"
             );
 
-            // 广播
-            server.getCommandManager().executeWithPrefix(
-                    server.getCommandSource(),
-                    "/tellraw @a {\"text\":\"服务器已启动！\",\"color\":\"green\"}"
-            );
-
-            LOGGER.info("服务器启动指令已执行！");
+            LOGGER.info("服务器启动指令已执行! ");
         } catch (Exception e) {
             LOGGER.warn("执行启动指令失败: {}", e.getMessage());
         }
