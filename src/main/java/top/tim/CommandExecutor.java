@@ -6,6 +6,10 @@ import net.minecraft.server.MinecraftServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class CommandExecutor implements ModInitializer {
 
     public static final String MOD_ID = "tim_server_command_executor";
@@ -20,8 +24,14 @@ public class CommandExecutor implements ModInitializer {
     }
 
     private void onServerStarted(MinecraftServer server) {
-        // 服务器完成启动执行指令
-        executeStartupCommands(server);
+        // 使用ScheduledExecutorService来延迟执行命令
+        try (ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor()) {
+            executor.schedule(() -> executeStartupCommands(server), 10, TimeUnit.SECONDS);
+            // 关闭执行器，避免资源泄漏
+            executor.shutdown();
+        } catch (Exception e) {
+            LOGGER.warn("延迟执行失败: {}", e.getMessage());
+        }
     }
 
     private void executeStartupCommands(MinecraftServer server) {
